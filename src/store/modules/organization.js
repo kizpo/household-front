@@ -1,4 +1,3 @@
-// store/modules/organization.js
 import http from '../../services/http.js';
 
 const state = {

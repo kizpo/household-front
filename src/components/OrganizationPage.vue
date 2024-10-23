@@ -114,7 +114,7 @@ export default {
       }).then(() => {
         this.createName = '';
         this.createLocation = '';
-        this.fetchOrganizations(); // 表を更新
+        this.fetchOrganizations();
         alert('データの作成に成功しました');
       }).catch(error => {
         console.error('There was an error!', error);
@@ -142,7 +142,7 @@ export default {
         this.updateId = '';
         this.updateName = '';
         this.updateLocation = '';
-        this.fetchOrganizations(); // 表を更新
+        this.fetchOrganizations();
         alert('データの更新に成功しました');
       }).catch(error => {
         console.error('There was an error!', error);
@@ -153,7 +153,7 @@ export default {
       this.$store.dispatch('organizations/deleteOrganization', this.deleteId)
         .then(() => {
           this.deleteId = '';
-          this.fetchOrganizations(); // 表を更新
+          this.fetchOrganizations();
           alert('データの削除に成功しました');
         })
         .catch(error => {

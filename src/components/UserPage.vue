@@ -2,7 +2,7 @@
     <div>
         <h1>User Page</h1>
         <b-table :items="users" :fields="fields"></b-table>
-        <div v-if="error" class="error-message">{{ error }}</div>
+        <div v-if="error">{{ error }}</div>
     </div>
 </template>
 
@@ -31,7 +31,5 @@ export default {
 </script>
 
 <style scoped>
-.error-message {
-    color: red;
-}
+
 </style>

@@ -39,7 +39,7 @@ export default {
 }
 
 .navbar-nav .nav-link {
-  color: white; /* 文字色を白にして背景に合わせて見やすく */
+  color: white;
 }
 
 @import 'bootstrap/dist/css/bootstrap.css';

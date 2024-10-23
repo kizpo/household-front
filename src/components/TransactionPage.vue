@@ -23,6 +23,11 @@
                     <b-form-select v-model="transaction.category_id" :options="categoryOptions" required></b-form-select>
                 </b-form-group>
 
+                <div>
+                    <strong>作成後の残高: {{ calculatedTotal }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>現在の残高: {{ currentBalance }}</strong>
+                </div>
+
                 <b-button type="submit" variant="primary">作成</b-button>
                 <b-button @click="isCreateModalVisible = false" variant="secondary">キャンセル</b-button>
             </b-form>
@@ -161,10 +166,28 @@ export default {
         ...mapGetters('transactions', [
             'transactionsWithCategoryNames',
             'categoryOptions'
-        ])
+        ]),
+        calculatedTotal() {
+            const income = Number(this.transaction.income) || 0;
+            const expense = Number(this.transaction.expense) || 0;
+            return this.currentBalance + income - expense;
+        },
+        currentBalance() {
+            return this.transactionsWithCategoryNames.reduce((acc, transaction) => {
+                return acc + transaction.income - transaction.expense;
+            }, 0);
+        }
     },
     mounted() {
         this.fetchData();
+    },
+    watch: {
+        transactionsWithCategoryNames: {
+            handler: function () {
+                this.updateChart();
+            },
+            immediate: true
+        },
     },
     methods: {
         ...mapActions('transactions', [
@@ -177,7 +200,7 @@ export default {
         fetchData() {
             this.fetchTransactions({ userId: this.userId, accountId: this.accountId })
                 .then(() => {
-                    this.updateChart();
+                    //this.updateChart();
                 });
             this.fetchCategories(this.userId);
         },
@@ -252,7 +275,7 @@ export default {
                 .then(() => {
                     this.isCreateModalVisible = false;
                     this.resetTransactionForm();
-                    this.fetchData();
+                    //this.fetchData();
                 })
                 .catch(error => {
                     this.error = error.message;
@@ -262,7 +285,7 @@ export default {
             this.updateTransaction(this.transaction)
                 .then(() => {
                     this.isUpdateModalVisible = false;
-                    this.fetchData();
+                    //this.fetchData();
                 })
                 .catch(error => {
                     this.error = error.message;
@@ -272,7 +295,7 @@ export default {
             this.deleteTransaction(this.transaction.id)
                 .then(() => {
                     this.isDeleteModalVisible = false;
-                    this.fetchData();
+                    //this.fetchData();
                 })
                 .catch(error => {
                     this.error = error.message;

@@ -6,6 +6,7 @@ import user from './modules/users';
 import accounts from './modules/accounts';
 import transactions from './modules/transactions';
 import categories from './modules/categories';
+import bankList from './modules/bankList';
 import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     user,
     accounts,
     transactions,
-    categories
+    categories,
+    bankList
   },
   plugins: [createPersistedState()],
 });

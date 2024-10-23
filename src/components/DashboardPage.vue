@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+//import axios from 'axios';
+import http from '../services/http.js';
 
 export default {
     data() {
@@ -17,19 +18,27 @@ export default {
         this.fetchUsername();
     },
     methods: {
-        async fetchUsername() {
+        fetchUsername() {
             const userId = localStorage.getItem('user_id');
+            //const token = localStorage.getItem('token'); // トークンを取得
+
             if (!userId) {
                 console.error('User ID not found in local storage');
                 return;
             }
 
-            try {
-                const response = await axios.get(`http://localhost:3000/api/v1/users/${userId}`);
+            // ヘッダーにトークンを追加
+            http.get(`/users/${userId}`, {
+                //headers: {
+                //    Authorization: `Bearer ${token}` // トークンをヘッダーに追加
+                //}
+            })
+            .then(response => {
                 this.username = response.data.name;
-            } catch (error) {
+            })
+            .catch(error => {
                 console.error('Error fetching user name:', error);
-            }
+            });
         }
     }
 };

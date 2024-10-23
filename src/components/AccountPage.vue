@@ -33,7 +33,7 @@
         <b-modal v-model="isCreateModalVisible" title="アカウントの作成" hide-footer>
             <b-form @submit.prevent="submitCreateAccount">
                 <b-form-group label="口座名">
-                    <b-form-input v-model="newAccount.name" required></b-form-input>
+                    <b-form-select v-model="newAccount.name" :options="bankListOptions" required></b-form-select>
                 </b-form-group>
                 <input type="hidden" v-model="newAccount.user_id" />
                 <b-button type="submit" variant="primary">作成</b-button>
@@ -95,7 +95,6 @@ export default {
                 balance: 0
             },
             fields: [
-                //{ key: 'id', label: 'ID' },
                 { key: 'name', label: '口座名' },
                 { key: 'balance', label: '残高' },
                 { key: 'created_at', label: '作成日時' },
@@ -107,13 +106,20 @@ export default {
     computed: {
         ...mapGetters([
             'accounts',
-            'error'
-        ])
+            'error',
+            'bankList'
+        ]),
+        bankListOptions() {
+            return this.bankList.map(bank => {
+                return { value: bank.name, text: bank.name };
+            });
+        }
     },
     created() {
         this.userId = localStorage.getItem('user_id');
         if (this.userId) {
             this.fetchAccounts(this.userId);
+            this.fetchBankList();
         } else {
             console.error('ユーザーIDがローカルストレージに見つかりません。');
         }
@@ -123,11 +129,12 @@ export default {
             'fetchAccounts',
             'createAccount',
             'updateAccount',
-            'deleteAccount'
+            'deleteAccount',
+            'fetchBankList',
         ]),
         formatDate(date) {
-        return moment(date).format('YYYY-MM-DD');
-    },
+            return moment(date).format('YYYY-MM-DD');
+        },
         showCreateModal() {
             this.newAccount.user_id = this.userId;
             this.isCreateModalVisible = true;
@@ -159,16 +166,16 @@ export default {
             });
         },
         viewTransactions(account) {
-            const userId = localStorage.getItem('user_id'); //localStorageからuser_idを取得
+            const userId = localStorage.getItem('user_id');
             if (!userId) {
                 console.error('user_idが見つかりません');
                 return;
             }
             this.$router.push({
                 name: 'TransactionPage',
-                params: { userId: Number(userId), accountId: account.id } //userIdとaccountIdを使って遷移
+                params: { userId: Number(userId), accountId: account.id }
             });
-    },
+        },
     }
 };
 </script>
