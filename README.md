@@ -1,26 +1,11 @@
-# sample_app
+# 家計簿アプリ（フロントエンド）
 
-## Project setup
-```
-npm install
-```
+## 制作背景
+現在参加中である長期インターンの参加に向けて、インターンで戦力になるためにWEB開発知識があまりない状態から制作を開始しました。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+毎週のオンラインミーティングで、インターン先のエンジニアの方から実装課題（認証機能追加、残高の推移グラフ表示 等）をいただき、次のミーティングまでにそれをこなすため、独学で勉強を進めていくスタイルで行いました。
+そのため、必要な技術の情報を検索して取得し、自分のものにするという力がよく身に付きました。
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## 技術選定およびその意図
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# householdapp_front
-# household_front
